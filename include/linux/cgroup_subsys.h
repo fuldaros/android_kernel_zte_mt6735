@@ -59,10 +59,19 @@ SUBSYS(net_cls)
 SUBSYS(blkio)
 #endif
 
+<<<<<<< HEAD
 /* */
 
 #if IS_SUBSYS_ENABLED(CONFIG_CGROUP_PERF)
 SUBSYS(perf)
+=======
+#if IS_ENABLED(CONFIG_CGROUP_BFQIO)
+SUBSYS(bfqio)
+#endif
+
+#if IS_ENABLED(CONFIG_CGROUP_PERF)
+SUBSYS(perf_event)
+>>>>>>> 9c37e3f379... block: cgroups, kconfig, build bits for BFQ-v7r8-3.18.0
 #endif
 
 /* */

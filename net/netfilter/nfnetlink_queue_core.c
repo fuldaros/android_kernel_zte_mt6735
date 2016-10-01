@@ -227,8 +227,13 @@ nfqnl_flush(struct nfqnl_instance *queue, nfqnl_cmpfn cmpfn, unsigned long data)
 	spin_unlock_bh(&queue->lock);
 }
 
+<<<<<<< HEAD
 static int
 nfqnl_zcopy(struct sk_buff *to, const struct sk_buff *from, int len, int hlen)
+=======
+static void
+nfqnl_zcopy(struct sk_buff *to, struct sk_buff *from, int len, int hlen)
+>>>>>>> da2f02b... Linux 3.10.75
 {
 	int i, j = 0;
 	int plen = 0; /* length of skb->head fragment */

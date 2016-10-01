@@ -5218,3 +5218,4 @@ out:
 	range->len = EXT4_C2B(EXT4_SB(sb), trimmed) << sb->s_blocksize_bits;
 	return ret;
 }
+

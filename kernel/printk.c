@@ -3099,3 +3099,4 @@ void get_kernel_log_buffer(unsigned long *addr, unsigned long *size, unsigned lo
 	*start = (unsigned long)&log_first_idx;
 }
 #endif
+

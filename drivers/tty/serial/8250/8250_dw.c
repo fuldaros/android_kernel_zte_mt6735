@@ -116,13 +116,9 @@ static void dw8250_serial_out32(struct uart_port *p, int offset, int value)
 {
 	struct dw8250_data *d = p->private_data;
 
-	if (offset == UART_LCR)
-		d->last_lcr = value;
+	if (offset == UART_MCR)
+		d->last_mcr = value;
 
-<<<<<<< HEAD
-	offset <<= p->regshift;
-	writel(value, p->membase + offset);
-=======
 	writel(value, p->membase + (offset << p->regshift));
 
 	/* Make sure LCR write wasn't ignored */
@@ -140,27 +136,24 @@ static void dw8250_serial_out32(struct uart_port *p, int offset, int value)
 		 * dev_err(p->dev, "Couldn't set LCR to %d\n", value);
 		 */
 	}
->>>>>>> d823119... Linux 3.10.76
 }
 
 static unsigned int dw8250_serial_in32(struct uart_port *p, int offset)
 {
-	offset <<= p->regshift;
+	unsigned int value = readl(p->membase + (offset << p->regshift));
 
-	return readl(p->membase + offset);
+	return dw8250_modify_msr(p, offset, value);
 }
 
 static int dw8250_handle_irq(struct uart_port *p)
 {
-	struct dw8250_data *d = p->private_data;
 	unsigned int iir = p->serial_in(p, UART_IIR);
 
 	if (serial8250_handle_irq(p, iir)) {
 		return 1;
 	} else if ((iir & UART_IIR_BUSY) == UART_IIR_BUSY) {
-		/* Clear the USR and write the LCR again. */
+		/* Clear the USR */
 		(void)p->serial_in(p, DW_UART_USR);
-		p->serial_out(p, UART_LCR, d->last_lcr);
 
 		return 1;
 	}
@@ -448,3 +441,4 @@ module_platform_driver(dw8250_platform_driver);
 MODULE_AUTHOR("Jamie Iles");
 MODULE_LICENSE("GPL");
 MODULE_DESCRIPTION("Synopsys DesignWare 8250 serial port driver");
+

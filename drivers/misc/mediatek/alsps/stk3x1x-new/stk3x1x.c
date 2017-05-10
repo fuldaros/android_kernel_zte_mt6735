@@ -72,7 +72,7 @@
 #include <linux/hwmsensor.h>
 #include <linux/sensors_io.h>
 #include <linux/hwmsen_dev.h>
-#include <stk3x1x_cust_alsps.h>
+#include "stk3x1x_cust_alsps.h"
 #include "stk3x1x.h"
 #define DRIVER_VERSION          "3.2.2 20140305"
 #include <alsps.h>

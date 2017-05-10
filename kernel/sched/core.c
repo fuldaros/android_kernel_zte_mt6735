@@ -5624,7 +5624,6 @@ migration_call(struct notifier_block *nfb, unsigned long action, void *hcpu)
 
 	case CPU_UP_PREPARE:
 		rq->calc_load_update = calc_load_update;
-		account_reset_rq(rq);
 		break;
 
 	case CPU_ONLINE:
@@ -8544,3 +8543,4 @@ unsigned long long mt_sched_clock(void)
 EXPORT_SYMBOL(mt_get_thread_cputime);
 EXPORT_SYMBOL(mt_get_cpu_idle);
 EXPORT_SYMBOL(mt_sched_clock);
+

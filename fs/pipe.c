@@ -409,17 +409,9 @@ pipe_read(struct kiocb *iocb, const struct iovec *_iov,
 			}
 
 			atomic = !iov_fault_in_pages_write(iov, chars);
-<<<<<<< HEAD
 redo:
 			addr = ops->map(pipe, buf, atomic);
 			error = pipe_iov_copy_to_user(iov, addr + buf->offset, chars, atomic);
-=======
-			remaining = chars;
-redo:
-			addr = ops->map(pipe, buf, atomic);
-			error = pipe_iov_copy_to_user(iov, addr, &buf->offset,
-						      &remaining, atomic);
->>>>>>> 7deaf55... Linux 3.10.82
 			ops->unmap(pipe, buf, addr);
 			if (unlikely(error)) {
 				/*
@@ -434,6 +426,7 @@ redo:
 				break;
 			}
 			ret += chars;
+			buf->offset += chars;
 			buf->len -= chars;
 
 			/* Was it a packet buffer? Clean up and exit */
@@ -1330,3 +1323,4 @@ static int __init init_pipe_fs(void)
 }
 
 fs_initcall(init_pipe_fs);
+

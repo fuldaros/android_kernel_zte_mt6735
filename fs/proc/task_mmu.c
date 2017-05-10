@@ -1221,18 +1221,6 @@ out:
 	return ret;
 }
 
-<<<<<<< HEAD
-=======
-static int pagemap_open(struct inode *inode, struct file *file)
-{
-	/* do not disclose physical addresses to unprivileged
-	   userspace (closes a rowhammer attack vector) */
-	if (!capable(CAP_SYS_ADMIN))
-		return -EPERM;
-	return 0;
-}
-
->>>>>>> da2f02b... Linux 3.10.75
 const struct file_operations proc_pagemap_operations = {
 	.llseek		= mem_lseek, /* borrow this */
 	.read		= pagemap_read,

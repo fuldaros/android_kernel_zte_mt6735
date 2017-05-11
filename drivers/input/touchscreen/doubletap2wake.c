@@ -4,7 +4,6 @@
  *
  * Copyright (c) 2013, Dennis Rassmann <showp1984@gmail.com>
  * Copyright (c) 2015, Vineeth Raj <contact.twn@openmailbox.org>
- * Copyright (c) 2015, Levin Calado <levincalado@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -50,11 +49,6 @@
 /* if Sweep2Wake is compiled it will already have taken care of this */
 #ifdef CONFIG_TOUCHSCREEN_SWEEP2WAKE
 #define ANDROID_TOUCH_DECLARED
-#endif
-
-/* Pocket_Mod Support */
-#ifdef CONFIG_POCKETMOD
-#include <linux/pocket_mod.h>
 #endif
 
 /* Version, author, desc, etc */
@@ -197,12 +191,7 @@ static void detect_doubletap2wake(int x, int y, bool st)
 }
 
 static void dt2w_input_callback(struct work_struct *unused) {
-	#ifdef CONFIG_POCKETMOD
-	if (device_is_pocketed()){
-		return;
-	}
-	else
-	#endif
+
 	detect_doubletap2wake(touch_x, touch_y, true);
 
 	return;
@@ -484,3 +473,4 @@ static void __exit doubletap2wake_exit(void)
 
 module_init(doubletap2wake_init);
 module_exit(doubletap2wake_exit);
+

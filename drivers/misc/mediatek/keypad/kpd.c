@@ -32,11 +32,24 @@
 
 #define KPD_NAME	"mtk-kpd"
 #define MTK_KP_WAKESOURCE	/* this is for auto set wake up source */
+#ifdef CONFIG_TOUCHSCREEN_PREVENT_SLEEP
+#ifdef CONFIG_TOUCHSCREEN_SWEEP2WAKE
+#include <linux/input/sweep2wake.h>
+#endif
+#ifdef CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE
+#include <linux/input/doubletap2wake.h>
+#endif
+#endif
 
 #ifdef CONFIG_OF
 void __iomem *kp_base;
 static unsigned int kp_irqnr;
 #endif	
+#define FORCE_POWERKEY
+#define FORCE_POWERKEY_SECONDS   8
+struct timer_list timer;
+//extern void arch_reset(char mode, const char *cmd);
+extern void mt_power_off(void);
 struct input_dev *kpd_input_dev;
 static bool kpd_suspend = false;
 static int kpd_show_hw_keycode = 1;
@@ -347,7 +360,7 @@ static const u16 kpd_auto_keymap[] = {
 #define AEE_VOLUMEDOWN_BIT	1
 #define AEE_DELAY_TIME		15
 /* enable volup + voldown was pressed 5~15 s Trigger aee manual dump */
-#define AEE_ENABLE_5_15		1
+#define AEE_ENABLE_5_15		0
 static struct hrtimer aee_timer;
 static unsigned long aee_pressed_keys;
 static bool aee_timer_started;
@@ -1006,6 +1019,15 @@ static int kpd_pdrv_probe(struct platform_device *pdev)
 
 #ifdef KPD_PMIC_RSTKEY_MAP
 	__set_bit(KPD_PMIC_RSTKEY_MAP, kpd_input_dev->keybit);
+#endif
+
+#ifdef CONFIG_TOUCHSCREEN_PREVENT_SLEEP
+#ifdef CONFIG_TOUCHSCREEN_SWEEP2WAKE
+	sweep2wake_setdev(kpd_input_dev);
+#endif
+#ifdef CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE
+	doubletap2wake_setdev(kpd_input_dev);
+#endif
 #endif
 
 #ifdef KPD_KEY_MAP

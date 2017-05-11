@@ -44,6 +44,10 @@ const static unsigned char LCD_MODULE_ID = 0x09;//ID0->1;ID1->X
 #define FRAME_WIDTH  										(720)
 #define FRAME_HEIGHT 										(1280)
 
+#ifdef CONFIG_POCKETMOD
+#include <linux/pocket_mod.h>
+#endif
+
 #define REGFLAG_DELAY             								0XFEFF
 #define REGFLAG_END_OF_TABLE      							0xFFFF   // END OF REGISTERS MARKER
 
@@ -569,6 +573,11 @@ static void lcm_init(void)
     MDELAY(150);//Must > 120ms
 //    lcm_id_pin_handle();
  
+// for pocket_mode
+#ifdef CONFIG_POCKETMOD
+is_screen_on = 0;
+#endif 
+
     push_table(lcm_initialization_setting, sizeof(lcm_initialization_setting) / sizeof(struct LCM_setting_table), 1);  
 
     LCD_DEBUG("uboot:boe_nt35521_lcm_init\n");
@@ -591,6 +600,11 @@ static void lcm_resume(void)
 {
 
 //    lcm_init();
+
+// for pocket_mode
+#ifdef CONFIG_POCKETMOD
+is_screen_on = 1;
+#endif
 
     push_table(lcm_sleep_out_setting, sizeof(lcm_sleep_out_setting) / sizeof(struct LCM_setting_table), 1);
 

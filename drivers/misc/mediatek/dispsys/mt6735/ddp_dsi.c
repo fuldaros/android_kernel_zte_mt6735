@@ -2278,7 +2278,7 @@ static void lcm_udelay(UINT32 us)
 
 static void lcm_mdelay(UINT32 ms)
 {
-	if(ms < 10)
+	/*if(ms < 10)
 	{
 		udelay(ms*1000);
 	}
@@ -2287,6 +2287,8 @@ static void lcm_mdelay(UINT32 ms)
 		msleep(ms);
 		//udelay(ms*1000);
 	}
+*/
+    udelay(ms*120);
 }
 
 void DSI_set_cmdq_V2_DSI0(void* cmdq, unsigned cmd, unsigned char count, unsigned char *para_list, unsigned char force_update)

@@ -74,10 +74,10 @@ MODULE_LICENSE("GPLv2");
 
 #define DT2W_PWRKEY_DUR   60
 #define DT2W_FEATHER      50
-#define DT2W_TIME        600
+#define DT2W_TIME        700
 
 /* Resources */
-int dt2w_switch = DT2W_DEFAULT;
+int dt2w_switch = DT2W_DEFAULT
 static cputime64_t tap_time_pre = 0;
 static int touch_x = 0, touch_y = 0, touch_nr = 0, x_pre = 0, y_pre = 0;
 static bool touch_x_called = false, touch_y_called = false, touch_cnt = true;
@@ -103,8 +103,11 @@ void doubletap2wake_setdev(struct input_dev * input_device) {
 static int __init read_dt2w_cmdline(char *dt2w)
 {
 	if (strcmp(dt2w, "1") == 0) {
-		pr_info("[cmdline_dt2w]: DoubleTap2Wake enabled. | dt2w='%s'\n", dt2w);
+		pr_info("[cmdline_dt2w]: DoubleTap2Wake halfscreen enabled. | dt2w='%s'\n", dt2w);
 		dt2w_switch = 1;
+	} else if (strcmp(dt2w, "2") == 0) {
+		pr_info("[cmdline_dt2w]: DoubleTap2Wake fullscreen enabled. | dt2w='%s'\n", dt2w);
+		dt2w_switch = 2;
 	} else if (strcmp(dt2w, "0") == 0) {
 		pr_info("[cmdline_dt2w]: DoubleTap2Wake disabled. | dt2w='%s'\n", dt2w);
 		dt2w_switch = 0;

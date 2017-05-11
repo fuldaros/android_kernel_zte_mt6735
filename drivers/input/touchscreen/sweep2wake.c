@@ -62,49 +62,16 @@ MODULE_LICENSE("GPLv2");
 
 /* Tuneables */
 #define S2W_DEBUG             0
-#define S2W_DEFAULT           0
+#define S2W_DEFAULT           1
 #define S2W_S2SONLY_DEFAULT   0
 #define S2W_PWRKEY_DUR       60
 
-#ifdef CONFIG_MACH_MSM8974_HAMMERHEAD
-/* Hammerhead aka Nexus 5 */
-#define S2W_Y_MAX               1920
-#define S2W_X_MAX               1080
-#define S2W_Y_LIMIT             S2W_Y_MAX-130
-#define S2W_X_B1                400
-#define S2W_X_B2                700
-#define S2W_X_FINAL             250
-#elif defined(CONFIG_MACH_APQ8064_MAKO)
-/* Mako aka Nexus 4 */
-#define S2W_Y_LIMIT             2350
-#define S2W_X_MAX               1540
-#define S2W_X_B1                500
-#define S2W_X_B2                1000
-#define S2W_X_FINAL             300
-#elif defined(CONFIG_MACH_APQ8064_FLO)
-/* Flo/Deb aka Nexus 7 2013 */
-#define S2W_Y_MAX               2240
-#define S2W_X_MAX               1344
+#define S2W_Y_MAX               1280
+#define S2W_X_MAX               720
 #define S2W_Y_LIMIT             S2W_Y_MAX-110
-#define S2W_X_B1                500
-#define S2W_X_B2                700
-#define S2W_X_FINAL             450
-/* assume sprout */
-#elif defined(CONFIG_ARCH_MTK_PROJECT)
-#define S2W_Y_MAX               854
-#define S2W_X_MAX               480
-#define S2W_Y_LIMIT             S2W_Y_MAX-70
-#define S2W_X_B1                120
-#define S2W_X_B2                240
-#define S2W_X_FINAL             120
-#else
-/* defaults */
-#define S2W_Y_LIMIT             2350
-#define S2W_X_MAX               1540
-#define S2W_X_B1                500
-#define S2W_X_B2                1000
-#define S2W_X_FINAL             300
-#endif
+#define S2W_X_B1                130
+#define S2W_X_B2                360
+#define S2W_X_FINAL             160
 
 
 /* Resources */

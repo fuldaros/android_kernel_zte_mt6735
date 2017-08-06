@@ -1,0 +1,18 @@
+ubuntu:
+  image: ubuntu:xenial
+  script:
+  - apt-get update -qyy
+  - apt-get install -qyy curl bc make git build-essential
+  - git clone https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9
+  - rm -rf out
+  - mkdir out
+  - toolchain=$PWD/aarch64-linux-android-4.9/bin/aarch64-linux-android-
+  - export KBUILD_BUILD_USER=assusdan
+  - export KBUILD_BUILD_HOST=SRT
+  - export CROSS_COMPILE=$toolchain
+  - export ARCH=arm64
+  - export TARGET_ARCH=arm64
+  - makeflags+=" O=out"
+  - make O=out lineage_P635A20_defconfig
+  - make Image.gz-dtb
+  - curl --upload-file arch/arm64/boot/Image.gz-dtb https://transfer.sh/Image.gz-dtb |grep transfer
